@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Direct-Origin Onboarding – UdyogKranti O2O</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Direct-Origin Business onboarding for UdyogKranti O2O. Mandatory GST and origin verification.">
+    <meta name="description" content="Direct-Origin Business onboarding for UdyogKranti O2O. Mandatory verification and capability declaration.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,78 +24,71 @@
     </div>
 </header>
 
-<!-- STEP 1: ELIGIBILITY -->
+<!-- STEP 1 -->
 <section id="step1">
     <h1>Direct-Origin Business Onboarding</h1>
-    <p class="intro">
-        This platform is exclusively for manufacturers and direct service providers.
-        Traders, resellers, and agents are permanently rejected.
-    </p>
+    <p class="intro">Only manufacturers and direct service providers are allowed.</p>
 
     <div class="card">
-        <h2>Before You Proceed</h2>
-        <ul>
-            <li>✔ You own or directly operate the facility</li>
-            <li>✔ GST registration is mandatory</li>
-            <li>✔ Facility verification is compulsory</li>
-            <li>✖ Traders, brokers, agents are not allowed</li>
-        </ul>
-
         <label class="check">
-            <input type="checkbox" id="c1">
-            I confirm I am a direct-origin business
+            <input type="checkbox" id="c1"> I am a direct-origin business
         </label>
-
         <label class="check">
-            <input type="checkbox" id="c2">
-            I agree to strict verification and governance
+            <input type="checkbox" id="c2"> I agree to strict verification
         </label>
-
-        <button type="button" id="proceedBtn" class="btn btn-primary" disabled onclick="goToGST()">
-            Proceed to GST Verification
-        </button>
+        <button id="btn1" class="btn btn-primary" disabled onclick="goStep2()">Proceed</button>
     </div>
 </section>
 
-<!-- STEP 2: GST -->
+<!-- STEP 2 -->
 <section id="step2" class="hidden">
     <h1>GST Verification</h1>
-    <p class="intro">Enter your GST number to proceed.</p>
-
     <div class="card">
-        <input type="text" id="gstInput" placeholder="Enter 15-character GST number">
+        <input type="text" id="gst" placeholder="Enter 15-character GST">
         <button class="btn btn-primary" onclick="verifyGST()">Verify GST</button>
-        <p id="gstMessage" class="message"></p>
+        <p id="gstMsg" class="message"></p>
     </div>
 </section>
 
-<!-- STEP 3: FACILITY PROOF -->
+<!-- STEP 3 -->
 <section id="step3" class="hidden">
-    <h1>Origin / Facility Proof</h1>
+    <h1>Facility Proof</h1>
+    <div class="card">
+        <ul>
+            <li>✔ Facility exterior (nameboard)</li>
+            <li>✔ Facility interior</li>
+            <li>✔ Machinery / work area</li>
+        </ul>
+        <button class="btn btn-primary" onclick="goStep4()">Mark as Uploaded</button>
+    </div>
+</section>
+
+<!-- STEP 4 -->
+<section id="step4" class="hidden">
+    <h1>Capability & Machinery Declaration</h1>
     <p class="intro">
-        To maintain trust on UdyogKranti O2O, facility proof is mandatory.
-        Profiles without proof will never be visible.
+        Declare what you can actually manufacture or deliver.
+        Overstatement leads to rejection.
     </p>
 
     <div class="card">
-        <h2>Mandatory Uploads (Mock)</h2>
-        <ul>
-            <li>✔ Factory / Facility exterior (nameboard visible)</li>
-            <li>✔ Factory / Facility interior</li>
-            <li>✔ Machinery or operational area</li>
-            <li>✔ Authorized person at facility</li>
-        </ul>
+        <label>Primary Industry</label>
+        <input type="text" placeholder="e.g. Pharma / FMCG / Plastics">
 
-        <p class="warning">
-            Uploaded media will be verified. Stock images or false proof
-            will result in permanent rejection.
-        </p>
+        <label>Manufacturing / Service Processes</label>
+        <input type="text" placeholder="e.g. Tablet compression, Injection moulding">
 
-        <button class="btn btn-primary" onclick="completeMock()">
-            Mark Facility Proof as Uploaded
+        <label>Key Machinery (comma separated)</label>
+        <input type="text" placeholder="Machine name, capacity">
+
+        <label>Monthly Capacity (approx.)</label>
+        <input type="text" placeholder="e.g. 10 lakh units">
+
+        <button class="btn btn-primary" onclick="completeOnboarding()">
+            Submit Capability Declaration
         </button>
 
-        <p id="finalMessage" class="message"></p>
+        <p id="finalMsg" class="message"></p>
     </div>
 </section>
 
@@ -104,45 +97,46 @@
 </footer>
 
 <script>
-    const c1 = document.getElementById("c1");
-    const c2 = document.getElementById("c2");
-    const proceedBtn = document.getElementById("proceedBtn");
+const c1 = document.getElementById("c1");
+const c2 = document.getElementById("c2");
+const btn1 = document.getElementById("btn1");
 
-    c1.addEventListener("change", toggleProceed);
-    c2.addEventListener("change", toggleProceed);
+c1.onchange = c2.onchange = () => {
+    btn1.disabled = !(c1.checked && c2.checked);
+};
 
-    function toggleProceed() {
-        proceedBtn.disabled = !(c1.checked && c2.checked);
+function goStep2() {
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
+}
+
+function verifyGST() {
+    const gst = document.getElementById("gst").value.trim();
+    const msg = document.getElementById("gstMsg");
+    if (gst.length === 15) {
+        msg.style.color = "#22c55e";
+        msg.innerText = "GST accepted.";
+        setTimeout(() => {
+            step2.classList.add("hidden");
+            step3.classList.remove("hidden");
+        }, 800);
+    } else {
+        msg.style.color = "#ef4444";
+        msg.innerText = "Invalid GST. Cannot proceed.";
     }
+}
 
-    function goToGST() {
-        document.getElementById("step1").classList.add("hidden");
-        document.getElementById("step2").classList.remove("hidden");
-    }
+function goStep4() {
+    step3.classList.add("hidden");
+    step4.classList.remove("hidden");
+}
 
-    function verifyGST() {
-        const gst = document.getElementById("gstInput").value.trim();
-        const msg = document.getElementById("gstMessage");
-
-        if (gst.length === 15) {
-            msg.style.color = "#22c55e";
-            msg.innerText = "GST accepted. Proceeding to facility verification.";
-            setTimeout(() => {
-                document.getElementById("step2").classList.add("hidden");
-                document.getElementById("step3").classList.remove("hidden");
-            }, 1000);
-        } else {
-            msg.style.color = "#ef4444";
-            msg.innerText = "Invalid GST. Registration cannot proceed.";
-        }
-    }
-
-    function completeMock() {
-        const finalMsg = document.getElementById("finalMessage");
-        finalMsg.style.color = "#22c55e";
-        finalMsg.innerText =
-            "Mock onboarding complete. Your profile will remain invisible until verification is approved.";
-    }
+function completeOnboarding() {
+    const msg = document.getElementById("finalMsg");
+    msg.style.color = "#22c55e";
+    msg.innerText =
+        "Capability submitted. Profile is now pending verification and remains invisible.";
+}
 </script>
 
 </body>
