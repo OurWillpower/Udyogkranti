@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Direct-Origin Onboarding – UdyogKranti O2O</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Direct-Origin Business onboarding for UdyogKranti O2O. Mandatory GST and origin verification. No agents.">
+    <meta name="description" content="Direct-Origin Business onboarding for UdyogKranti O2O. Mandatory GST and origin verification.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,51 +24,92 @@
     </div>
 </header>
 
-<section class="hero">
+<!-- STEP 1: ELIGIBILITY -->
+<section id="step1">
     <h1>Direct-Origin Business Onboarding</h1>
-    <p>
+    <p class="intro">
         This platform is exclusively for manufacturers and direct service providers.
-        Traders, resellers, and agents are not permitted.
+        Traders, resellers, and agents are permanently rejected.
     </p>
+
+    <div class="card">
+        <h2>Before You Proceed</h2>
+        <ul>
+            <li>✔ You own or directly operate the facility</li>
+            <li>✔ GST registration is mandatory</li>
+            <li>✔ Facility verification is compulsory</li>
+            <li>✖ Traders, brokers, agents are not allowed</li>
+        </ul>
+
+        <form>
+            <label class="check">
+                <input type="checkbox" id="c1">
+                I confirm I am a direct-origin business (not a trader or agent)
+            </label>
+
+            <label class="check">
+                <input type="checkbox" id="c2">
+                I agree to mandatory verification and strict governance
+            </label>
+
+            <button type="button" id="proceedBtn" class="btn btn-primary" disabled onclick="goToGST()">
+                Proceed to GST Verification
+            </button>
+        </form>
+    </div>
 </section>
 
-<section class="credibility">
-    <h2>Before You Proceed</h2>
-    <ul>
-        <li>✔ You must own or directly operate the production / service facility</li>
-        <li>✔ GST registration is mandatory</li>
-        <li>✔ Facility verification is compulsory</li>
-        <li>✖ Traders, brokers, and lead sellers are permanently rejected</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Step 1: Confirm Eligibility</h2>
-
-    <form class="onboard-form">
-        <label>
-            <input type="checkbox" required>
-            I confirm that I am a direct-origin business and not a trader or agent
-        </label>
-
-        <label>
-            <input type="checkbox" required>
-            I agree to mandatory verification and understand that incomplete or false information will lead to rejection
-        </label>
-
-        <button type="button" class="btn btn-primary" disabled>
-            Proceed to GST Verification
-        </button>
-    </form>
-
-    <p class="note">
-        Note: This is a mock onboarding screen. No data is being collected yet.
+<!-- STEP 2: GST VERIFICATION -->
+<section id="step2" class="hidden">
+    <h1>GST Verification</h1>
+    <p class="intro">
+        Enter your GST number. This platform does not allow registration without valid GST.
     </p>
+
+    <div class="card">
+        <label>GST Number</label>
+        <input type="text" id="gstInput" placeholder="Example: 27ABCDE1234F1Z5">
+
+        <button class="btn btn-primary" onclick="verifyGST()">Verify GST</button>
+
+        <p id="gstMessage" class="message"></p>
+    </div>
 </section>
 
 <footer>
     © 2025 UdyogKranti O2O · Direct-Origin Platform
 </footer>
+
+<script>
+    const c1 = document.getElementById("c1");
+    const c2 = document.getElementById("c2");
+    const proceedBtn = document.getElementById("proceedBtn");
+
+    c1.addEventListener("change", toggleProceed);
+    c2.addEventListener("change", toggleProceed);
+
+    function toggleProceed() {
+        proceedBtn.disabled = !(c1.checked && c2.checked);
+    }
+
+    function goToGST() {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+    }
+
+    function verifyGST() {
+        const gst = document.getElementById("gstInput").value.trim();
+        const msg = document.getElementById("gstMessage");
+
+        if (gst.length === 15) {
+            msg.style.color = "#22c55e";
+            msg.innerText = "GST format accepted. Proceeding to origin verification (next step).";
+        } else {
+            msg.style.color = "#ef4444";
+            msg.innerText = "Invalid GST. Registration cannot proceed.";
+        }
+    }
+</script>
 
 </body>
 </html>
