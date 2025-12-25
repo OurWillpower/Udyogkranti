@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verifier Dashboard – UdyogKranti O2O</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Internal verifier dashboard for UdyogKranti O2O">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo">UDYOGKRANTI O2O</div>
+            <div class="tagline">Internal Verification Panel</div>
+        </div>
+        <nav>
+            <a href="index.html">Onboarding</a>
+            <a href="verifier.html" class="active">Verifier</a>
+        </nav>
+    </div>
+</header>
+
+<section>
+    <h1>Pending Origin Verifications</h1>
+    <p class="intro">
+        Only profiles that pass all checks will be approved.
+        Rejected profiles are permanently blocked.
+    </p>
+
+    <!-- MOCK PROFILE 1 -->
+    <div class="card">
+        <h2>ABC Pharma Pvt Ltd</h2>
+        <ul>
+            <li><strong>GST:</strong> Submitted (Valid Format)</li>
+            <li><strong>Facility Proof:</strong> Uploaded</li>
+            <li><strong>Capability:</strong> Tablet & Capsule Manufacturing</li>
+            <li><strong>Declared Capacity:</strong> 20 lakh units / month</li>
+            <li><strong>Risk Flags:</strong> None</li>
+        </ul>
+
+        <button class="btn btn-primary" onclick="approve(this)">
+            Approve Verification
+        </button>
+        <button class="btn reject" onclick="reject(this)">
+            Reject Permanently
+        </button>
+
+        <p class="message"></p>
+    </div>
+
+    <!-- MOCK PROFILE 2 -->
+    <div class="card">
+        <h2>XYZ Packaging Works</h2>
+        <ul>
+            <li><strong>GST:</strong> Submitted (Valid Format)</li>
+            <li><strong>Facility Proof:</strong> Partial</li>
+            <li><strong>Capability:</strong> Plastic Containers</li>
+            <li><strong>Declared Capacity:</strong> Not Clear</li>
+            <li><strong>Risk Flags:</strong> Incomplete data</li>
+        </ul>
+
+        <button class="btn btn-primary" onclick="approve(this)">
+            Approve Verification
+        </button>
+        <button class="btn reject" onclick="reject(this)">
+            Reject Permanently
+        </button>
+
+        <p class="message"></p>
+    </div>
+</section>
+
+<footer>
+    © 2025 UdyogKranti O2O · Internal Use Only
+</footer>
+
+<script>
+function approve(btn) {
+    const msg = btn.parentElement.querySelector(".message");
+    msg.style.color = "#22c55e";
+    msg.innerText = "APPROVED: Profile is now visible to buyers.";
+}
+
+function reject(btn) {
+    const msg = btn.parentElement.querySelector(".message");
+    msg.style.color = "#ef4444";
+    msg.innerText = "REJECTED: Profile permanently blocked.";
+}
+</script>
+
+</body>
+</html>
