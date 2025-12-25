@@ -47,7 +47,7 @@ section {
 }
 
 h1 {
-    font-size: 36px;
+    font-size: 34px;
     margin-bottom: 10px;
 }
 
@@ -113,6 +113,11 @@ input[type="text"] {
     font-weight: bold;
 }
 
+.warning {
+    margin-top: 15px;
+    color: #f87171;
+}
+
 .hidden {
     display: none;
 }
@@ -127,6 +132,6 @@ footer {
 
 @media (max-width: 768px) {
     h1 {
-        font-size: 28px;
+        font-size: 26px;
     }
 }
