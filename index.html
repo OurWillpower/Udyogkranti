@@ -41,38 +41,61 @@
             <li>✖ Traders, brokers, agents are not allowed</li>
         </ul>
 
-        <form>
-            <label class="check">
-                <input type="checkbox" id="c1">
-                I confirm I am a direct-origin business (not a trader or agent)
-            </label>
+        <label class="check">
+            <input type="checkbox" id="c1">
+            I confirm I am a direct-origin business
+        </label>
 
-            <label class="check">
-                <input type="checkbox" id="c2">
-                I agree to mandatory verification and strict governance
-            </label>
+        <label class="check">
+            <input type="checkbox" id="c2">
+            I agree to strict verification and governance
+        </label>
 
-            <button type="button" id="proceedBtn" class="btn btn-primary" disabled onclick="goToGST()">
-                Proceed to GST Verification
-            </button>
-        </form>
+        <button type="button" id="proceedBtn" class="btn btn-primary" disabled onclick="goToGST()">
+            Proceed to GST Verification
+        </button>
     </div>
 </section>
 
-<!-- STEP 2: GST VERIFICATION -->
+<!-- STEP 2: GST -->
 <section id="step2" class="hidden">
     <h1>GST Verification</h1>
+    <p class="intro">Enter your GST number to proceed.</p>
+
+    <div class="card">
+        <input type="text" id="gstInput" placeholder="Enter 15-character GST number">
+        <button class="btn btn-primary" onclick="verifyGST()">Verify GST</button>
+        <p id="gstMessage" class="message"></p>
+    </div>
+</section>
+
+<!-- STEP 3: FACILITY PROOF -->
+<section id="step3" class="hidden">
+    <h1>Origin / Facility Proof</h1>
     <p class="intro">
-        Enter your GST number. This platform does not allow registration without valid GST.
+        To maintain trust on UdyogKranti O2O, facility proof is mandatory.
+        Profiles without proof will never be visible.
     </p>
 
     <div class="card">
-        <label>GST Number</label>
-        <input type="text" id="gstInput" placeholder="Example: 27ABCDE1234F1Z5">
+        <h2>Mandatory Uploads (Mock)</h2>
+        <ul>
+            <li>✔ Factory / Facility exterior (nameboard visible)</li>
+            <li>✔ Factory / Facility interior</li>
+            <li>✔ Machinery or operational area</li>
+            <li>✔ Authorized person at facility</li>
+        </ul>
 
-        <button class="btn btn-primary" onclick="verifyGST()">Verify GST</button>
+        <p class="warning">
+            Uploaded media will be verified. Stock images or false proof
+            will result in permanent rejection.
+        </p>
 
-        <p id="gstMessage" class="message"></p>
+        <button class="btn btn-primary" onclick="completeMock()">
+            Mark Facility Proof as Uploaded
+        </button>
+
+        <p id="finalMessage" class="message"></p>
     </div>
 </section>
 
@@ -103,11 +126,22 @@
 
         if (gst.length === 15) {
             msg.style.color = "#22c55e";
-            msg.innerText = "GST format accepted. Proceeding to origin verification (next step).";
+            msg.innerText = "GST accepted. Proceeding to facility verification.";
+            setTimeout(() => {
+                document.getElementById("step2").classList.add("hidden");
+                document.getElementById("step3").classList.remove("hidden");
+            }, 1000);
         } else {
             msg.style.color = "#ef4444";
             msg.innerText = "Invalid GST. Registration cannot proceed.";
         }
+    }
+
+    function completeMock() {
+        const finalMsg = document.getElementById("finalMessage");
+        finalMsg.style.color = "#22c55e";
+        finalMsg.innerText =
+            "Mock onboarding complete. Your profile will remain invisible until verification is approved.";
     }
 </script>
 
