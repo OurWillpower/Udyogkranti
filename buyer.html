@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buyer Requirement – UdyogKranti O2O</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Buyer requirement submission and best-fit matching on UdyogKranti O2O">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo">UDYOGKRANTI O2O</div>
+            <div class="tagline">Origin to Opportunity</div>
+        </div>
+        <nav>
+            <a href="index.html">Onboarding</a>
+            <a href="buyer.html" class="active">Buyer</a>
+            <a href="about.html">About</a>
+            <a href="founder.html">Founder</a>
+        </nav>
+    </div>
+</header>
+
+<section id="buyerStep1">
+    <h1>Submit Your Business Requirement</h1>
+    <p class="intro">
+        UdyogKranti O2O does not show random listings.
+        Tell us what you need — the platform identifies the best-fit origins.
+    </p>
+
+    <div class="card">
+        <label>Buyer Type</label>
+        <select id="buyerType" onchange="setBuyerType()">
+            <option value="">Select buyer type</option>
+            <option value="enterprise">Corporate / Enterprise</option>
+            <option value="sme">SME / Domestic Buyer</option>
+            <option value="export">Export / International Buyer</option>
+        </select>
+
+        <div id="requirementFields" class="hidden">
+            <label>Industry</label>
+            <input type="text" placeholder="e.g. Pharma, FMCG, Plastics">
+
+            <label>Product / Service Required</label>
+            <input type="text" placeholder="What needs to be manufactured or delivered">
+
+            <label>Estimated Quantity</label>
+            <input type="text" placeholder="Monthly / One-time requirement">
+
+            <div id="complianceBlock" class="hidden">
+                <label>Mandatory Compliance</label>
+                <input type="text" placeholder="FDA, FSSAI, ISO, Export regulations">
+            </div>
+
+            <label>Expected Timeline</label>
+            <input type="text" placeholder="Delivery timeline">
+
+            <button class="btn btn-primary" onclick="showMatches()">
+                Find Best-Fit Origins
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="buyerStep2" class="hidden">
+    <h1>Best-Fit Origins Identified</h1>
+    <p class="intro">
+        These origins are selected based on capability, capacity,
+        compliance readiness, and verification depth.
+    </p>
+
+    <div class="card">
+        <h2>Origin Match #1</h2>
+        <ul>
+            <li>✔ Verified Manufacturing Facility</li>
+            <li>✔ Capability Match: High</li>
+            <li>✔ Compliance Ready</li>
+            <li>✔ Capacity Available</li>
+        </ul>
+        <p class="message">Suitability Score: 92%</p>
+    </div>
+
+    <div class="card">
+        <h2>Origin Match #2</h2>
+        <ul>
+            <li>✔ Verified Origin</li>
+            <li>✔ Capability Match: Medium-High</li>
+            <li>✔ Partial Compliance</li>
+            <li>✔ Capacity Confirmed</li>
+        </ul>
+        <p class="message">Suitability Score: 84%</p>
+    </div>
+
+    <p class="note">
+        Contact details unlock only after intent confirmation.
+    </p>
+</section>
+
+<footer>
+    © 2025 UdyogKranti O2O · Decision Platform for Serious Buyers
+</footer>
+
+<script>
+function setBuyerType() {
+    const type = document.getElementById("buyerType").value;
+    const fields = document.getElementById("requirementFields");
+    const compliance = document.getElementById("complianceBlock");
+
+    if (type) {
+        fields.classList.remove("hidden");
+    }
+
+    if (type === "enterprise" || type === "export") {
+        compliance.classList.remove("hidden");
+    } else {
+        compliance.classList.add("hidden");
+    }
+}
+
+function showMatches() {
+    document.getElementById("buyerStep1").classList.add("hidden");
+    document.getElementById("buyerStep2").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
